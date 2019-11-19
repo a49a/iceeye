@@ -5,7 +5,7 @@ class FooSpider(scrapy.Spider):
     name = 'foo'
 
     def start_requests(self):
-        urls = ['http://www.baidu.com']
+        urls = ['http://www.zhihu.com']
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
