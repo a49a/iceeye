@@ -1,5 +1,7 @@
-from requests import Session
+from functools import partial
 import traceback
+
+from requests import Session
 
 import gevent
 from gevent import monkey
@@ -17,13 +19,15 @@ class Areq():
         self.session = Session()
         self.response = None
 
-
     def send(self, **kwargs):
         try:
             self.response = self.session.request(self.method, self.url, **kwargs)
         except Exception as e:
             self.exception = e
             self.traceback = traceback.format_exc()
+
+
+get = partial(Areq, "GET")
 
 
 # load request job
@@ -54,3 +58,11 @@ def map(reqs, size=None, exception_handler=None, gtimeout=None):
             ret.append(None)
 
     return ret
+
+
+def imap(reqs, stream=False, size=2, exception_handler=None):
+    pool = Pool(size)
+    # TODO 返回迭代器功能
+
+
+    pass
